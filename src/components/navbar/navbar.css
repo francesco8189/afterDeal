@@ -1,0 +1,230 @@
+:host, :host *{
+  font-family: inherit;
+  font-size: inherit;
+}
+
+
+/* =========================
+   NAVBAR (layout)
+   ========================= */
+.navbar{
+  height: 44px;
+  position: fixed;
+  inset: 0 0 auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, var(--c-1), var(--c-2));
+  box-shadow: var(--s-1);
+}
+
+/* drag (gestito da JS) */
+.ad-drag{
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+/* =========================
+   LEFT / RIGHT
+   ========================= */
+.nav-left,
+.nav-right{
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.nav-left{ gap: 20px; }
+
+.nav-right{
+  justify-content: flex-end;
+  gap: 10px; /* spazio tra risk e win */
+}
+
+.logo{
+  width: 36px;
+  height: 36px;
+}
+
+/* =========================
+   ADD MENU (pulsante + dropdown)
+   ========================= */
+.add-menu{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-add{
+  height: 25px;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--c-white);
+  color: var(--c-1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+}
+
+.add-dropdown{
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  min-width: 210px;
+  padding: 6px;
+  background: var(--c-);
+  border: 1px solid var(--c-white);
+  border-radius: 0 0 10px 10px;
+  box-shadow: var(--s-1);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  box-shadow: var(--s-1);
+}
+
+.dd-item{
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: var(--c-white);
+  color: var(--c-1);
+  padding: 10px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dd-item:hover{ background: var(--c-4) }
+
+.dd-sep{
+  height: 1px;
+  margin: 6px 6px;
+  background: rgba(4, 4, 4, 0.1);
+}
+
+/* =========================
+   RISK WRAP
+   ========================= */
+.risk-wrap{
+  width: min(250px, 100%);
+  height: 30px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  background: var(--c-white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-right: 15px;
+}
+
+.gradient-bar{
+  width: 98%;
+  height: 15px;
+  display: flex;
+  gap: 1px;
+}
+
+.gradient-bar span{
+  flex: 1 1 0;
+  width: 0;
+  height: 100%;
+}
+
+.gradient-bar span:first-child{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.gradient-bar span:last-child{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.risk-indicator{
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  left: var(--risk-level);
+  transform: translateX(-50%);
+  background: var(--c-danger);
+  pointer-events: none;
+  transition: left 0.5s ease;
+}
+
+.risk-indicator::before{
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--c-danger);
+}
+
+/* =========================
+   WINDOW BUTTONS
+   ========================= */
+.win-wrap{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-ctrl{
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: var(--t-1);
+  color: var(--c-white);
+  font-weight: bold;
+  transition: background-color .2s ease, transform .2s ease, filter .2s ease;
+}
+
+.btn-ctrl:hover{ background-color: rgba(255,255,255,.1); }
+.btn-close:hover{ background-color: var(--c-danger) !important; color: var(--c-white); }
+.btn-ctrl:active{ filter: brightness(.85); transform: translateY(1px); }
+
+/* =========================
+   MAX/RESTORE ICON (CSS)
+   ========================= */
+.btn-max{ position: relative; }
+.btn-max::before,
+.btn-max::after{
+  content:"";
+  position:absolute;
+  width: 11px;
+  height: 9px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  pointer-events:none;
+}
+.btn-max[data-state="max"]::after{ display:none; }
+.btn-max[data-state="restore"]::after{
+  display:block;
+  transform: translate(calc(-50% + 2px), calc(-50% - 2px));
+  opacity: .9;
+}
+.btn-max[data-state="restore"]::before{
+  transform: translate(calc(-50% - 1px), calc(-50% + 1px));
+}
+
+/* =========================
+   RESPONSIVE (stringe: resta solo +)
+   ========================= */
+@media (max-width: 600px){
+  .btn-add-label{ display:none; }
+  .btn-add{ width: 38px; padding: 0; justify-content:center; }
+}

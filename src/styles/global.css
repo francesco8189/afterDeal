@@ -1,0 +1,44 @@
+/* ======================================= */
+/* 1. DEFINIZIONE VARIABILI GLOBALI        */
+/* ======================================= */
+:root {
+    /* Colors */
+    --c-1: #415a77;
+    --c-2: #2c3e50;
+    --c-3: #40597a;
+    --c-4: #c8d5e6;
+    --c-white: #ffffff;
+    --c-danger: #a40f00;
+    --c-text-light: #ffffff;
+    
+    /* Text */
+    --t-1: 16px;
+    --t-2: 12px;
+    --ft: Calibri, Arial, sans-serif;
+    
+    /* Shadow */
+    --s-1: 0 2px 10px rgba(0,0,0,0.1);
+
+    /* Rischio (0% a 100%) */
+    --risk-level: 70%; 
+}
+
+/* ======================================= */
+/* 2. RESET E LAYOUT BASE                  */
+/* ======================================= */
+*,
+ *::before,
+ *::after {
+    box-sizing: border-box;
+}
+ 
+body {
+    font-family: var(--ft);
+    font-size: var(--t-1);
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column; 
+}

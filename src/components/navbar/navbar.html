@@ -1,0 +1,107 @@
+<nav class="navbar ad-drag">
+  <div class="nav-left">
+    <div class="container-logo ad-no-drag">
+      <img class="logo" src="../../assets/icon.png" alt="logo" />
+    </div>
+
+    <!-- ADD MENU -->
+    <div class="add-menu ad-no-drag">
+      <!-- DASHBOARD -->
+        <div class="add-menu ad-no-drag">
+        <button class="btn-add" type="button" data-add-toggle="dashboard" aria-haspopup="menu" aria-expanded="false" title="Dashboard">
+            <span class="btn-add-label">Dashboard</span>
+        </button>
+
+        <div class="add-dropdown" role="menu" hidden data-add-menu="dashboard">
+            <button class="dd-item" type="button" role="menuitem" data-add="riskoverview">Risk overview</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="upcomingdeadlines">Upcoming deadlines</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="keymetrics">Key metrics</button>
+            <div class="dd-sep" role="separator"></div>
+            <button class="dd-item" type="button" role="menuitem" data-add="latestactivity">Latest activity</button>
+        </div>
+        </div>
+
+        <!-- CONTRACTS -->
+        <div class="add-menu ad-no-drag">
+        <button class="btn-add" type="button" data-add-toggle="contracts" aria-haspopup="menu" aria-expanded="false" title="Contracts">
+            <span class="btn-add-label">Contracts</span>
+        </button>
+
+        <div class="add-dropdown" role="menu" hidden data-add-menu="contracts">
+            <button class="dd-item" type="button" role="menuitem" data-add="allcontracts">All contracts</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="newcontract">New contract</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="renewals">Renewals</button>
+            <div class="dd-sep" role="separator"></div>
+            <button class="dd-item" type="button" role="menuitem" data-add="slapenalties">SLAs &amp; penalties</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="attachments">Attachments</button>
+        </div>
+        </div>
+
+        <!-- DEADLINES -->
+        <div class="add-menu ad-no-drag">
+        <button class="btn-add" type="button" data-add-toggle="deadlines" aria-haspopup="menu" aria-expanded="false" title="Deadlines">
+            <span class="btn-add-label">Deadlines</span>
+        </button>
+
+        <div class="add-dropdown" role="menu" hidden data-add-menu="deadlines">
+            <button class="dd-item" type="button" role="menuitem" data-add="calendar">Calendar</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="bypriority">By priority</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="byclient">By client</button>
+            <div class="dd-sep" role="separator"></div>
+            <button class="dd-item" type="button" role="menuitem" data-add="reminders">Reminders</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="escalations">Escalations</button>
+        </div>
+        </div>
+
+        <!-- RISKS -->
+        <div class="add-menu ad-no-drag">
+        <button class="btn-add" type="button" data-add-toggle="risks" aria-haspopup="menu" aria-expanded="false" title="Risks">
+            <span class="btn-add-label">Risks</span>
+        </button>
+
+        <div class="add-dropdown" role="menu" hidden data-add-menu="risks">
+            <button class="dd-item" type="button" role="menuitem" data-add="riskregister">Risk register</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="assessments">Assessments</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="mitigationactions">Mitigation actions</button>
+            <div class="dd-sep" role="separator"></div>
+            <button class="dd-item" type="button" role="menuitem" data-add="criticalalerts">Critical alerts</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="trends">Trends</button>
+        </div>
+        </div>
+
+        <!-- TASKS -->
+        <div class="add-menu ad-no-drag">
+        <button class="btn-add" type="button" data-add-toggle="tasks" aria-haspopup="menu" aria-expanded="false" title="Tasks">
+            <span class="btn-add-label">Tasks</span>
+        </button>
+
+        <div class="add-dropdown" role="menu" hidden data-add-menu="tasks">
+            <button class="dd-item" type="button" role="menuitem" data-add="mytasks">My tasks</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="teamtasks">Team tasks</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="checklists">Checklists</button>
+            <div class="dd-sep" role="separator"></div>
+            <button class="dd-item" type="button" role="menuitem" data-add="templates">Templates</button>
+            <button class="dd-item" type="button" role="menuitem" data-add="completed">Completed</button>
+        </div>
+        </div>
+
+
+
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <div class="risk-wrap ad-no-drag" style="--risk-level: 89%;">
+      <div class="gradient-bar" aria-hidden="true"></div>
+      <div class="risk-indicator" aria-hidden="true"></div>
+    </div>
+
+    <div class="win-wrap ad-no-drag">
+      <button class="btn-ctrl" data-action="min" title="Minimize">—</button>
+      <button class="btn-ctrl btn-max" data-action="max" data-state="max"
+              title="Maximize" aria-label="Maximize"></button>
+      <button class="btn-ctrl btn-close" data-action="close" title="Close">✕</button>
+    </div>
+  </div>
+</nav>
+
