@@ -77,7 +77,7 @@ export class AdNavbar extends HTMLElement {
     // =========================================================
     // MENUS: hover open + close on outside click + ESC
     // =========================================================
-    const menus = Array.from(root.querySelectorAll(".add-menu"));
+    const menus = Array.from(root.querySelectorAll(".nav-menu"));
 
     const closeAllMenus = () => {
       menus.forEach((m) => {
@@ -156,7 +156,7 @@ export class AdNavbar extends HTMLElement {
         // section: se hai data-add-toggle="dashboard" ecc.
         const section =
           toggle?.getAttribute("data-add-toggle") ||
-          dd.getAttribute("data-add-menu") ||
+          dd.getAttribute("data-nav-menu") ||
           "menu";
 
         closeAllMenus();

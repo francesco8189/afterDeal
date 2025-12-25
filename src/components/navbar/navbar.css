@@ -52,14 +52,14 @@
 /* =========================
    ADD MENU (pulsante + dropdown)
    ========================= */
-.add-menu{
+.nav-menu{
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 20px;
 }
 
-.btn-add{
+.nav-item{
   height: 25px;
   padding: 15px;
   border: none;
@@ -225,6 +225,6 @@
    RESPONSIVE (stringe: resta solo +)
    ========================= */
 @media (max-width: 600px){
-  .btn-add-label{ display:none; }
-  .btn-add{ width: 38px; padding: 0; justify-content:center; }
+  .nav-item-label{ display:none; }
+  .nav-item{ width: 38px; padding: 0; justify-content:center; }
 }
