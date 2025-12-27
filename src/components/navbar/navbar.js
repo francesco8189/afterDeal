@@ -19,6 +19,10 @@ export class AdNavbar extends HTMLElement {
     const dragArea = root.querySelector(".navbar.ad-drag");
     const gradientBar = root.querySelector(".gradient-bar");
 
+    // Overlay (fuori dallo shadow)
+    const dimEl = document.getElementById("app-dim");
+    const setDim = (on) => dimEl?.classList.toggle("is-on", !!on);
+
     // -------------------------
     // Gradient segments (15)
     // -------------------------
@@ -78,15 +82,15 @@ export class AdNavbar extends HTMLElement {
     // =========================================================
     // MENUS: click-to-activate + hover-switch while active
     // close on outside click + ESC + pointer move outside => back to click
+    // + overlay scuro su app-container quando attivo
     // =========================================================
 
-    // Prendi solo i veri menu (quelli che hanno il toggle)
     const toggles = Array.from(root.querySelectorAll("[data-add-toggle]"));
     const menus = Array.from(
       new Set(toggles.map((t) => t.closest(".nav-menu")).filter(Boolean))
     );
 
-    let menuMode = false;   // false = click-only, true = hover-switch attivo
+    let menuMode = false;
     let openMenuEl = null;
     let closeTimer = null;
 
@@ -111,6 +115,7 @@ export class AdNavbar extends HTMLElement {
       clearCloseTimer();
       closeAllMenus();
       menuMode = false;
+      setDim(false);
     };
 
     const openMenu = (menuEl) => {
@@ -133,9 +138,10 @@ export class AdNavbar extends HTMLElement {
       dd.hidden = false;
       tg.setAttribute("aria-expanded", "true");
       openMenuEl = menuEl;
+
+      setDim(true);
     };
 
-    // chiusura “morbida” quando esci (per permettere passaggio ad altri menu)
     const scheduleDeactivate = () => {
       clearCloseTimer();
       closeTimer = setTimeout(() => {
@@ -143,12 +149,10 @@ export class AdNavbar extends HTMLElement {
       }, 160);
     };
 
-    // Click sul toggle: attiva menu-mode e apre
     menus.forEach((menuEl) => {
       const toggle = menuEl.querySelector("[data-add-toggle]");
       const dd = menuEl.querySelector(".add-dropdown");
 
-      // CLICK: entra in menuMode (hover-switch attivo)
       toggle?.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -161,14 +165,14 @@ export class AdNavbar extends HTMLElement {
         openMenu(menuEl);
       });
 
-      // HOVER: solo se menuMode attivo, fa switch sugli altri
+      // hover switch solo quando menuMode è attivo
       menuEl.addEventListener("mouseenter", () => {
         if (!menuMode) return;
         clearCloseTimer();
         if (openMenuEl !== menuEl) openMenu(menuEl);
       });
 
-      // Click su item -> dispatch evento + chiude e torna click-only
+      // click su item -> dispatch evento + chiudi
       dd?.addEventListener("click", (e) => {
         const item = e.target.closest("[data-add]");
         if (!item) return;
@@ -190,7 +194,7 @@ export class AdNavbar extends HTMLElement {
       });
     });
 
-    // Close on outside click (document-level, fuori dallo shadow)
+    // Click fuori (overlay incluso, perché è fuori dal componente)
     this._onDocPointerDown = (e) => {
       const path = e.composedPath?.() || [];
       if (path.includes(this)) return; // click dentro navbar
@@ -205,23 +209,20 @@ export class AdNavbar extends HTMLElement {
     };
     document.addEventListener("keydown", this._onDocKeyDown, true);
 
-    // ✅ Disattiva menu-mode anche solo spostando il mouse fuori (senza click)
+    // Disattiva menu-mode anche solo spostando il mouse fuori (senza click)
     this._onDocPointerMove = (e) => {
       if (!menuMode && !openMenuEl) return;
 
       const path = e.composedPath?.() || [];
       const insideNavbar = path.includes(this);
 
-      if (insideNavbar) {
-        clearCloseTimer();
-      } else {
-        scheduleDeactivate();
-      }
+      if (insideNavbar) clearCloseTimer();
+      else scheduleDeactivate();
     };
     document.addEventListener("pointermove", this._onDocPointerMove, true);
 
     // =========================================================
-    // DRAG + DOUBLE CLICK (exclude .ad-no-drag + interactive)
+    // DRAG + DOUBLE CLICK
     // =========================================================
     const isNoDrag = (t) =>
       !!t.closest(".ad-no-drag, button, a, input, textarea, select, [role='button']");
@@ -243,7 +244,6 @@ export class AdNavbar extends HTMLElement {
         e.preventDefault();
         clearDragTimer();
 
-        // delay per non rompere il doppio click
         dragTimer = setTimeout(async () => {
           try {
             await appWindow.startDragging();
@@ -268,6 +268,9 @@ export class AdNavbar extends HTMLElement {
   }
 
   disconnectedCallback() {
+    // spegni overlay se rimasto acceso
+    document.getElementById("app-dim")?.classList.remove("is-on");
+
     if (this._onDocPointerDown) {
       document.removeEventListener("pointerdown", this._onDocPointerDown, true);
       this._onDocPointerDown = null;
