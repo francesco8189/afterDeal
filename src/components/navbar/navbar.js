@@ -28,6 +28,7 @@ export class AdNavbar extends HTMLElement {
         "#9acf84", "#a6ce90", "#afcc9d", "#b6caaa", "#b9c6b7",
         "#adc0c2", "#96b3be", "#7ba2b8", "#5d8eb1", "#415a77",
       ];
+
       gradientBar.replaceChildren(
         ...colors.map((c) => {
           const s = document.createElement("span");
@@ -75,9 +76,26 @@ export class AdNavbar extends HTMLElement {
     });
 
     // =========================================================
-    // MENUS: hover open + close on outside click + ESC
+    // MENUS: click-to-activate + hover-switch while active
+    // close on outside click + ESC + pointer move outside => back to click
     // =========================================================
-    const menus = Array.from(root.querySelectorAll(".nav-menu"));
+
+    // Prendi solo i veri menu (quelli che hanno il toggle)
+    const toggles = Array.from(root.querySelectorAll("[data-add-toggle]"));
+    const menus = Array.from(
+      new Set(toggles.map((t) => t.closest(".nav-menu")).filter(Boolean))
+    );
+
+    let menuMode = false;   // false = click-only, true = hover-switch attivo
+    let openMenuEl = null;
+    let closeTimer = null;
+
+    const clearCloseTimer = () => {
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+    };
 
     const closeAllMenus = () => {
       menus.forEach((m) => {
@@ -86,10 +104,19 @@ export class AdNavbar extends HTMLElement {
         if (dd) dd.hidden = true;
         if (tg) tg.setAttribute("aria-expanded", "false");
       });
+      openMenuEl = null;
+    };
+
+    const deactivateMenuMode = () => {
+      clearCloseTimer();
+      closeAllMenus();
+      menuMode = false;
     };
 
     const openMenu = (menuEl) => {
-      // chiudi gli altri
+      if (!menuEl) return;
+
+      // chiudi gli altri (switch)
       menus.forEach((m) => {
         if (m !== menuEl) {
           const dd = m.querySelector(".add-dropdown");
@@ -105,61 +132,54 @@ export class AdNavbar extends HTMLElement {
 
       dd.hidden = false;
       tg.setAttribute("aria-expanded", "true");
+      openMenuEl = menuEl;
     };
 
-    const closeMenu = (menuEl) => {
-      const dd = menuEl.querySelector(".add-dropdown");
-      const tg = menuEl.querySelector("[data-add-toggle]");
-      if (dd) dd.hidden = true;
-      if (tg) tg.setAttribute("aria-expanded", "false");
+    // chiusura “morbida” quando esci (per permettere passaggio ad altri menu)
+    const scheduleDeactivate = () => {
+      clearCloseTimer();
+      closeTimer = setTimeout(() => {
+        if (menuMode) deactivateMenuMode();
+      }, 160);
     };
 
-    // Hover behavior (con un piccolo delay per evitare flicker)
+    // Click sul toggle: attiva menu-mode e apre
     menus.forEach((menuEl) => {
-      let closeTimer = null;
+      const toggle = menuEl.querySelector("[data-add-toggle]");
+      const dd = menuEl.querySelector(".add-dropdown");
 
-      const clearCloseTimer = () => {
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-          closeTimer = null;
-        }
-      };
-
-      menuEl.addEventListener("mouseenter", () => {
+      // CLICK: entra in menuMode (hover-switch attivo)
+      toggle?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         clearCloseTimer();
+
+        // se clicchi lo stesso menu già aperto => chiude e torna click-only
+        if (openMenuEl === menuEl) return deactivateMenuMode();
+
+        menuMode = true;
         openMenu(menuEl);
       });
 
-      menuEl.addEventListener("mouseleave", () => {
+      // HOVER: solo se menuMode attivo, fa switch sugli altri
+      menuEl.addEventListener("mouseenter", () => {
+        if (!menuMode) return;
         clearCloseTimer();
-        closeTimer = setTimeout(() => closeMenu(menuEl), 140);
+        if (openMenuEl !== menuEl) openMenu(menuEl);
       });
 
-      // (opzionale) click sul toggle: utile per touch/trackpad
-      const toggle = menuEl.querySelector("[data-add-toggle]");
-      toggle?.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const dd = menuEl.querySelector(".add-dropdown");
-        if (!dd) return;
-        if (dd.hidden) openMenu(menuEl);
-        else closeMenu(menuEl);
-      });
-
-      // Click su item -> dispatch evento
-      const dd = menuEl.querySelector(".add-dropdown");
+      // Click su item -> dispatch evento + chiude e torna click-only
       dd?.addEventListener("click", (e) => {
         const item = e.target.closest("[data-add]");
         if (!item) return;
 
         const action = item.dataset.add;
-
-        // section: se hai data-add-toggle="dashboard" ecc.
         const section =
           toggle?.getAttribute("data-add-toggle") ||
           dd.getAttribute("data-nav-menu") ||
           "menu";
 
-        closeAllMenus();
+        deactivateMenuMode();
 
         this.dispatchEvent(
           new CustomEvent("navigate", {
@@ -172,18 +192,33 @@ export class AdNavbar extends HTMLElement {
 
     // Close on outside click (document-level, fuori dallo shadow)
     this._onDocPointerDown = (e) => {
-      // composedPath include l'host e lo shadow content
       const path = e.composedPath?.() || [];
-      if (path.includes(this)) return; // click dentro il componente
-      closeAllMenus();
+      if (path.includes(this)) return; // click dentro navbar
+      if (!menuMode && !openMenuEl) return;
+      deactivateMenuMode();
     };
     document.addEventListener("pointerdown", this._onDocPointerDown, true);
 
     // ESC chiude
     this._onDocKeyDown = (e) => {
-      if (e.key === "Escape") closeAllMenus();
+      if (e.key === "Escape" && (menuMode || openMenuEl)) deactivateMenuMode();
     };
     document.addEventListener("keydown", this._onDocKeyDown, true);
+
+    // ✅ Disattiva menu-mode anche solo spostando il mouse fuori (senza click)
+    this._onDocPointerMove = (e) => {
+      if (!menuMode && !openMenuEl) return;
+
+      const path = e.composedPath?.() || [];
+      const insideNavbar = path.includes(this);
+
+      if (insideNavbar) {
+        clearCloseTimer();
+      } else {
+        scheduleDeactivate();
+      }
+    };
+    document.addEventListener("pointermove", this._onDocPointerMove, true);
 
     // =========================================================
     // DRAG + DOUBLE CLICK (exclude .ad-no-drag + interactive)
@@ -228,6 +263,7 @@ export class AdNavbar extends HTMLElement {
       });
 
       dragArea.addEventListener("pointerup", clearDragTimer);
+      dragArea.addEventListener("pointercancel", clearDragTimer);
     }
   }
 
@@ -239,6 +275,10 @@ export class AdNavbar extends HTMLElement {
     if (this._onDocKeyDown) {
       document.removeEventListener("keydown", this._onDocKeyDown, true);
       this._onDocKeyDown = null;
+    }
+    if (this._onDocPointerMove) {
+      document.removeEventListener("pointermove", this._onDocPointerMove, true);
+      this._onDocPointerMove = null;
     }
   }
 }

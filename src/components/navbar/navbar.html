@@ -1,92 +1,111 @@
+<link rel="stylesheet" href="../../styles/global.css">
+
 <nav class="navbar ad-drag">
   <div class="nav-left">
     <div class="container-logo ad-no-drag">
       <img class="logo" src="../../assets/icon.png" alt="logo" />
     </div>
 
-    <!-- ADD MENU -->
-    <div class="nav-menu ad-no-drag">
+    <!-- MENUS -->
+    <div class="nav-menus ad-no-drag">
       <!-- DASHBOARD -->
-        <div class="nav-menu ad-no-drag">
-        <button class="nav-item" type="button" data-add-toggle="dashboard" aria-haspopup="menu" aria-expanded="false" title="Dashboard">
-            <span class="nav-item-label">Dashboard</span>
+      <div class="nav-menu ad-no-drag">
+        <button class="nav-item" type="button"
+                data-add-toggle="dashboard"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                title="Dashboard">
+          <span class="nav-item-label">Dashboard</span>
         </button>
 
         <div class="add-dropdown" role="menu" hidden data-nav-menu="dashboard">
-            <button class="dd-item" type="button" role="menuitem" data-add="riskoverview">Risk overview</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="upcomingdeadlines">Upcoming deadlines</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="keymetrics">Key metrics</button>
-            <div class="dd-sep" role="separator"></div>
-            <button class="dd-item" type="button" role="menuitem" data-add="latestactivity">Latest activity</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="riskoverview">Risk overview</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="upcomingdeadlines">Upcoming deadlines</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="keymetrics">Key metrics</button>
+          <div class="dd-sep" role="separator"></div>
+          <button class="dd-item" type="button" role="menuitem" data-add="latestactivity">Latest activity</button>
         </div>
-        </div>
+      </div>
 
-        <!-- CONTRACTS -->
-        <div class="nav-menu ad-no-drag">
-        <button class="nav-item" type="button" data-add-toggle="contracts" aria-haspopup="menu" aria-expanded="false" title="Contracts">
-            <span class="nav-item-label">Contracts</span>
+      <!-- CONTRACTS -->
+      <div class="nav-menu ad-no-drag">
+        <button class="nav-item" type="button"
+                data-add-toggle="contracts"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                title="Contracts">
+          <span class="nav-item-label">Contracts</span>
         </button>
 
         <div class="add-dropdown" role="menu" hidden data-nav-menu="contracts">
-            <button class="dd-item" type="button" role="menuitem" data-add="allcontracts">All contracts</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="newcontract">New contract</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="renewals">Renewals</button>
-            <div class="dd-sep" role="separator"></div>
-            <button class="dd-item" type="button" role="menuitem" data-add="slapenalties">SLAs &amp; penalties</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="attachments">Attachments</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="allcontracts">All contracts</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="newcontract">New contract</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="renewals">Renewals</button>
+          <div class="dd-sep" role="separator"></div>
+          <button class="dd-item" type="button" role="menuitem" data-add="slapenalties">SLAs &amp; penalties</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="attachments">Attachments</button>
         </div>
-        </div>
+      </div>
 
-        <!-- DEADLINES -->
-        <div class="nav-menu ad-no-drag">
-        <button class="nav-item" type="button" data-add-toggle="deadlines" aria-haspopup="menu" aria-expanded="false" title="Deadlines">
-            <span class="nav-item-label">Deadlines</span>
+      <!-- DEADLINES -->
+      <div class="nav-menu ad-no-drag">
+        <button class="nav-item" type="button"
+                data-add-toggle="deadlines"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                title="Deadlines">
+          <span class="nav-item-label">Deadlines</span>
         </button>
 
         <div class="add-dropdown" role="menu" hidden data-nav-menu="deadlines">
-            <button class="dd-item" type="button" role="menuitem" data-add="calendar">Calendar</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="bypriority">By priority</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="byclient">By client</button>
-            <div class="dd-sep" role="separator"></div>
-            <button class="dd-item" type="button" role="menuitem" data-add="reminders">Reminders</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="escalations">Escalations</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="calendar">Calendar</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="bypriority">By priority</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="byclient">By client</button>
+          <div class="dd-sep" role="separator"></div>
+          <button class="dd-item" type="button" role="menuitem" data-add="reminders">Reminders</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="escalations">Escalations</button>
         </div>
-        </div>
+      </div>
 
-        <!-- RISKS -->
-        <div class="nav-menu ad-no-drag">
-        <button class="nav-item" type="button" data-add-toggle="risks" aria-haspopup="menu" aria-expanded="false" title="Risks">
-            <span class="nav-item-label">Risks</span>
+      <!-- RISKS -->
+      <div class="nav-menu ad-no-drag">
+        <button class="nav-item" type="button"
+                data-add-toggle="risks"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                title="Risks">
+          <span class="nav-item-label">Risks</span>
         </button>
 
         <div class="add-dropdown" role="menu" hidden data-nav-menu="risks">
-            <button class="dd-item" type="button" role="menuitem" data-add="riskregister">Risk register</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="assessments">Assessments</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="mitigationactions">Mitigation actions</button>
-            <div class="dd-sep" role="separator"></div>
-            <button class="dd-item" type="button" role="menuitem" data-add="criticalalerts">Critical alerts</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="trends">Trends</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="riskregister">Risk register</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="assessments">Assessments</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="mitigationactions">Mitigation actions</button>
+          <div class="dd-sep" role="separator"></div>
+          <button class="dd-item" type="button" role="menuitem" data-add="criticalalerts">Critical alerts</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="trends">Trends</button>
         </div>
-        </div>
+      </div>
 
-        <!-- TASKS -->
-        <div class="nav-menu ad-no-drag">
-        <button class="nav-item" type="button" data-add-toggle="tasks" aria-haspopup="menu" aria-expanded="false" title="Tasks">
-            <span class="nav-item-label">Tasks</span>
+      <!-- TASKS -->
+      <div class="nav-menu ad-no-drag">
+        <button class="nav-item" type="button"
+                data-add-toggle="tasks"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                title="Tasks">
+          <span class="nav-item-label">Tasks</span>
         </button>
 
         <div class="add-dropdown" role="menu" hidden data-nav-menu="tasks">
-            <button class="dd-item" type="button" role="menuitem" data-add="mytasks">My tasks</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="teamtasks">Team tasks</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="checklists">Checklists</button>
-            <div class="dd-sep" role="separator"></div>
-            <button class="dd-item" type="button" role="menuitem" data-add="templates">Templates</button>
-            <button class="dd-item" type="button" role="menuitem" data-add="completed">Completed</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="mytasks">My tasks</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="teamtasks">Team tasks</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="checklists">Checklists</button>
+          <div class="dd-sep" role="separator"></div>
+          <button class="dd-item" type="button" role="menuitem" data-add="templates">Templates</button>
+          <button class="dd-item" type="button" role="menuitem" data-add="completed">Completed</button>
         </div>
-        </div>
-
-
-
+      </div>
     </div>
   </div>
 
@@ -104,4 +123,3 @@
     </div>
   </div>
 </nav>
-
