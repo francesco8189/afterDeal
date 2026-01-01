@@ -1,3 +1,5 @@
+import { overlay } from "../../utils/overlay.js";
+
 const { window: tauriWindow } = window.__TAURI__;
 const appWindow = tauriWindow.getCurrentWindow();
 
@@ -19,9 +21,6 @@ export class AdNavbar extends HTMLElement {
     const dragArea = root.querySelector(".navbar.ad-drag");
     const gradientBar = root.querySelector(".gradient-bar");
 
-    // Overlay (fuori dallo shadow)
-    const dimEl = document.getElementById("app-dim");
-    const setDim = (on) => dimEl?.classList.toggle("is-on", !!on);
 
     // -------------------------
     // Gradient segments (15)
@@ -115,7 +114,7 @@ export class AdNavbar extends HTMLElement {
       clearCloseTimer();
       closeAllMenus();
       menuMode = false;
-      setDim(false);
+      overlay.hide();
     };
 
     const openMenu = (menuEl) => {
@@ -139,7 +138,7 @@ export class AdNavbar extends HTMLElement {
       tg.setAttribute("aria-expanded", "true");
       openMenuEl = menuEl;
 
-      setDim(true);
+      overlay.show();
     };
 
     const scheduleDeactivate = () => {
@@ -268,8 +267,8 @@ export class AdNavbar extends HTMLElement {
   }
 
   disconnectedCallback() {
-    // spegni overlay se rimasto acceso
-    document.getElementById("app-dim")?.classList.remove("is-on");
+    // Spegni overlay se rimasto acceso
+    overlay.hide();
 
     if (this._onDocPointerDown) {
       document.removeEventListener("pointerdown", this._onDocPointerDown, true);

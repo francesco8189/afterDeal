@@ -1,3 +1,6 @@
+import { formatCurrency } from "../../utils/formatters.js";
+import { dataService } from "../../services/DataService.js";
+
 export class AdDashboard extends HTMLElement {
   async connectedCallback() {
     const root = this.attachShadow({ mode: "open" });
@@ -27,14 +30,14 @@ export class AdDashboard extends HTMLElement {
 
   async loadDashboardData() {
     try {
-      // Qui in futuro userai invoke("get_dashboard_data")
-      const data = await this.fakeData();
+      // Usa DataService centralizzato (con caching automatico)
+      const data = await dataService.getDashboardData();
 
-      // KPI
+      // KPI - usa formatCurrency per formattazione consistente
       this.kpiCards.contracts.textContent = data.kpi.contracts;
       this.kpiCards.deadlines.textContent = data.kpi.deadlines;
-      this.kpiCards.penalties.textContent = `€ ${data.kpi.penalties}`;
-      this.kpiCards.avoided.textContent = `€ ${data.kpi.avoided}`;
+      this.kpiCards.penalties.textContent = formatCurrency(data.kpi.penalties);
+      this.kpiCards.avoided.textContent = formatCurrency(data.kpi.avoided);
 
       // Timeline
       this.timelineBox.innerHTML = data.timeline
@@ -54,38 +57,6 @@ export class AdDashboard extends HTMLElement {
     } catch (err) {
       console.error("Dashboard load error:", err);
     }
-  }
-
-  // Mock temporaneo
-  async fakeData() {
-    return {
-      kpi: {
-        contracts: 42,
-        deadlines: 7,
-        penalties: 12400,
-        avoided: 8900,
-      },
-      timeline: [
-        { date: "2025-01-12", label: "Contratto Alfa – Revisione" },
-        { date: "2025-01-15", label: "Contratto Beta – Scadenza milestone" },
-      ],
-      critical: [
-        "Contratto Gamma – scade tra 2 giorni",
-        "Contratto Delta – milestone non assegnata",
-      ],
-      tasks: [
-        "Mario – Revisione contratto Gamma",
-        "Lucia – Aggiornamento SLA Delta",
-                "Lucia – Aggiornamento SLA Delta",
-                        "Mario – Revisione contratto Gamma",
-        "Lucia – Aggiornamento SLA Delta",
-                "Lucia – Aggiornamento SLA Delta",
-                        "Mario – Revisione contratto Gamma",
-        "Lucia – Aggiornamento SLA Delta",
-                "Lucia – Aggiornamento SLA Delta",
-
-      ],
-    };
   }
 }
 

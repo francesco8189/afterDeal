@@ -1,7 +1,7 @@
 /* =========================
    NAVBAR (layout)
    ========================= */
-.navbar{
+.navbar {
   height: 44px;
   position: relative;
   inset: auto;
@@ -15,7 +15,7 @@
 }
 
 /* drag (gestito da JS) */
-.ad-drag{
+.ad-drag {
   user-select: none;
   -webkit-user-select: none;
   cursor: default;
@@ -25,20 +25,22 @@
    LEFT / RIGHT
    ========================= */
 .nav-left,
-.nav-right{
+.nav-right {
   display: flex;
   align-items: center;
   min-width: 0;
 }
 
-.nav-left{ gap: 20px; }
+.nav-left {
+  gap: 20px;
+}
 
-.nav-right{
+.nav-right {
   justify-content: flex-end;
   gap: 10px;
 }
 
-.logo{
+.logo {
   width: 36px;
   height: 36px;
 }
@@ -46,7 +48,7 @@
 /* =========================
    MENUS WRAP
    ========================= */
-.nav-menus{
+.nav-menus {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -56,13 +58,13 @@
 /* =========================
    MENU (button + dropdown)
    ========================= */
-.nav-menu{
+.nav-menu {
   position: relative;
   display: inline-flex;
   align-items: start;
 }
 
-.nav-item{
+.nav-item {
   height: 20px;
   padding: 13px;
   background: none;
@@ -76,13 +78,13 @@
 }
 
 /* hover “normale” */
-.nav-item:hover{
+.nav-item:hover {
   background: var(--c-white);
   color: var(--c-1);
 }
 
 /* Stato attivo (dropdown aperto): colore permanente */
-.nav-item[aria-expanded="true"]{
+.nav-item[aria-expanded="true"] {
   background: var(--c-white);
   color: var(--c-1);
   border-bottom-left-radius: 0;
@@ -90,18 +92,12 @@
 }
 
 /* evita flicker tra hover e active */
-.nav-item[aria-expanded="true"]:hover{
+.nav-item[aria-expanded="true"]:hover {
   background: var(--c-white);
   color: var(--c-1);
 }
 
-/* evita flicker tra hover e active */
-.nav-item[aria-expanded="true"]:hover{
-  background: var(--c-white);
-  color: var(--c-1);
-}
-
-.add-dropdown{
+.add-dropdown {
   position: absolute;
   top: calc(100% + 9px);
   left: 0;
@@ -114,7 +110,7 @@
   z-index: 2000;
 }
 
-.dd-item{
+.dd-item {
   width: 100%;
   text-align: left;
   border: none;
@@ -125,11 +121,11 @@
   cursor: pointer;
 }
 
-.dd-item:hover { 
+.dd-item:hover {
   background: var(--c-4);
 }
 
-.dd-sep{
+.dd-sep {
   height: 1px;
   margin: 6px 6px;
   background: var(--c-4);
@@ -138,7 +134,7 @@
 /* =========================
    RISK WRAP
    ========================= */
-.risk-wrap{
+.risk-wrap {
   width: min(250px, 100%);
   height: 30px;
   padding: 0 6px;
@@ -152,29 +148,30 @@
   margin-right: 15px;
 }
 
-.gradient-bar{
+.gradient-bar {
   width: 98%;
   height: 15px;
   display: flex;
   gap: 1px;
 }
 
-.gradient-bar span{
+.gradient-bar span {
   flex: 1 1 0;
   width: 0;
   height: 100%;
 }
 
-.gradient-bar span:first-child{
+.gradient-bar span:first-child {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-.gradient-bar span:last-child{
+
+.gradient-bar span:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
-.risk-indicator{
+.risk-indicator {
   position: absolute;
   top: 2px;
   bottom: 2px;
@@ -186,7 +183,7 @@
   transition: left 0.5s ease;
 }
 
-.risk-indicator::before{
+.risk-indicator::before {
   content: "";
   position: absolute;
   top: -1px;
@@ -200,13 +197,13 @@
 /* =========================
    WINDOW BUTTONS
    ========================= */
-.win-wrap{
+.win-wrap {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.btn-ctrl{
+.btn-ctrl {
   background: none;
   border: none;
   width: 38px;
@@ -223,42 +220,67 @@
   transition: background-color .2s ease, transform .2s ease, filter .2s ease;
 }
 
-.btn-ctrl:hover{ background-color: rgba(255,255,255,.1); }
-.btn-close:hover{ background-color: var(--c-danger) !important; color: var(--c-white); }
-.btn-ctrl:active{ filter: brightness(.85); transform: translateY(1px); }
+.btn-ctrl:hover {
+  background-color: rgba(255, 255, 255, .1);
+}
+
+.btn-close:hover {
+  background-color: var(--c-danger) !important;
+  color: var(--c-white);
+}
+
+.btn-ctrl:active {
+  filter: brightness(.85);
+  transform: translateY(1px);
+}
 
 /* =========================
    MAX/RESTORE ICON (CSS)
    ========================= */
-.btn-max{ position: relative; }
+.btn-max {
+  position: relative;
+}
+
 .btn-max::before,
-.btn-max::after{
-  content:"";
-  position:absolute;
+.btn-max::after {
+  content: "";
+  position: absolute;
   width: 11px;
   height: 9px;
   border: 2px solid currentColor;
   border-radius: 2px;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-  pointer-events:none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
-.btn-max[data-state="max"]::after{ display:none; }
-.btn-max[data-state="restore"]::after{
-  display:block;
+
+.btn-max[data-state="max"]::after {
+  display: none;
+}
+
+.btn-max[data-state="restore"]::after {
+  display: block;
   transform: translate(calc(-50% + 2px), calc(-50% - 2px));
   opacity: .9;
 }
-.btn-max[data-state="restore"]::before{
+
+.btn-max[data-state="restore"]::before {
   transform: translate(calc(-50% - 1px), calc(-50% + 1px));
 }
 
 /* =========================
    RESPONSIVE
    ========================= */
-@media (max-width: 600px){
-  .nav-item-label{ display:none; }
-  .nav-item{ width: 38px; padding: 0; justify-content:center; min-width: 38px; }
-}
+@media (max-width: 600px) {
+  .nav-item-label {
+    display: none;
+  }
 
+  .nav-item {
+    width: 38px;
+    padding: 0;
+    justify-content: center;
+    min-width: 38px;
+  }
+}
